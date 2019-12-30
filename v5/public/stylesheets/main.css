@@ -1,0 +1,27 @@
+.thumbnail img{
+	width:100%;
+}
+.thumbnail{
+	padding:0;
+	margin-bottom: 10px;
+}
+.thumbnail .caption-full{
+	padding:9px;
+  padding-left: 3px;
+}
+hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 1px solid grey;
+}
+html {
+  min-height: 100%;
+  position: relative;
+}
+.footer {
+position: absolute;
+bottom: 0;
+width: 100%;
+overflow: hidden;
+}

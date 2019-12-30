@@ -1,0 +1,33 @@
+<% include ../partials/header%>
+<div class="container" style="margin-bottom: 40px;">
+	<header class="jumbotron" style="padding-top: 0px; padding-bottom: 0px">
+		<div class="container"  >
+			<h1 >CampGround</h1>
+			<p>Don't know what to say just some random words</p>
+			<p>
+				<a class="btn btn-primary btn-large" href="/campground/new">Append new stuff</a>
+			</p>
+		</div>
+	</header>
+
+
+
+	<div class="row text-center" style="display: flex; flex-wrap: wrap;" >
+		<%	camp.forEach(function(element){%>
+			<div class="col-md-3 col-sm-6">
+				<div class="thumbnail">
+					<img src="<%=element.Address%>" style="height:300px">
+					<div class="caption">
+						<H4 style="display: inline;">     <%= element.Name%></H4>
+						<H4 style="display: inline;">5.6</H4>
+					</div>
+					<p>
+						<a class="btn btn-primary btn-large" href="/campground/<%= element._id%>">More Info</a>
+					</p>
+				</div>
+			</div>
+		<%		});%>
+			
+	</div>
+</div>
+<% include ../partials/footer%>

@@ -1,0 +1,63 @@
+<% include ../partials/header%>
+<style type="text/css">
+.cleanfloat{
+	margin-left: 11%;
+}
+.cleanfloat::after{display: block; clear: both; content:""; visibility: hidden; height: 0;}/*清浮动*/
+.pop {list-style:none; float:left; font-size:30px; margin:5px; color:#b0c4de; cursor:pointer;}
+.hs,.cs{color:#AEDD81;}/*五角星样式*/
+</style>
+<div class="container">
+	<div class="row">
+		<h1 style="text-align: center;">Editing.....</h1>
+		<div style="width:30%; margin:0 auto;">
+			<form action="/campground/<%=camp_id%>/comment/<%=obj._id%>?_method=PUT" method="post">
+				<div class="form-group" style="margin-bottom: 5px;">
+					<span for="name">Your Comment</span>
+					<textarea class="form-control" rows="5" name="comment[text]" placeholder="Text" required="required"></textarea>
+				</div>
+				<div class="form-group">
+               		<input class="form-control" type="hidden" value=0 name="comment[Rating]" id="ll">
+               		<span for="name">Your Rating</span>
+               		<ul class="cleanfloat">
+
+					  	<li class="pop" >&#9733;</li>
+						<li class="pop" >&#9733;</li>
+						<li class="pop" >&#9733;</li>
+						<li class="pop" >&#9733;</li>
+						<li class="pop" >&#9733;</li>
+						
+					</ul>
+                </div> 
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block">Submit</button>
+				</div>	
+			</form>
+			<div class="text-center" >
+				<a href="/campground">Go to Campground</a>
+			</div>	
+		</div>
+	</div>	
+</div>
+<% include ../partials/footer%>
+<script type="text/javascript">
+	var sample=document.getElementById("ll");
+    
+  	$(function () {
+        $(".cleanfloat li").hover(function(){
+            $(this).addClass('hs');
+            $(this).prevAll().addClass('hs');
+        },function(){
+            $(this).removeClass('hs');
+            $(this).prevAll().removeClass('hs');
+        })
+
+        $(".cleanfloat li").click(function () {
+            $(this).addClass('cs');
+            $(this).prevAll().addClass('cs');
+            $(this).nextAll().removeClass('cs');
+            // console.log($(this).index()+1);
+            sample.value=$(this).index()+1;
+        })
+    })
+</script>

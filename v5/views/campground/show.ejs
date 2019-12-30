@@ -1,0 +1,103 @@
+<% include ../partials/header%>
+<style type="text/css">
+.pop {list-style:none; float:left; font-size:18px; margin:0px; color:#AEDD81;}
+
+</style>
+<div class="container" style="margin-bottom: 40px;">	
+	<div class="row">
+		<div class="col-md-3">
+			<p class="lead">Camp Project</p>
+			<div class="list-group">
+				<li class="list-group-item">Info1</li>
+				<li class="list-group-item">Info2</li>
+				<li class="list-group-item">Info3</li>
+			</div>
+		</div>	
+		<div class="col-md-9">
+			<div class="thumbnail">
+				<img style="max-height: 475px;" class="img-responsive"src="<%=camp.Address%>">
+				<div class="caption-full">
+					
+					<!-- <h4 style="text-align: right;">Rating</h4> -->
+					<div style="width: 20%" class="pull-right">
+					<h2 style="text-align: right;font-family:'Lucida Grande', Verdana, Tahoma, Arial, sans-serif;margin-top: 10px;" >5$/Night</h2>
+					
+					<%if (camp.Comment.length!=0){%>
+						<h2 style="text-align: right;font-family:'Lucida Grande', Verdana, Tahoma, Arial, sans-serif;margin-top: 10px;" ><%=average%></h2>
+					<%}%>
+					</div>
+					<div style="width: 80%">
+					<h4><%=camp.Name%></h4>
+					
+
+					<span>Submitted By: <%=camp.author.username%></span>
+				
+					<div style="overflow: auto;max-height: 300px;">
+					<p style=" word-wrap: break-word;word-break: break-all;white-space: pre-line;margin-bottom: 0px;"><%=camp.Description%> 	
+
+					</p>
+					</div>
+					 </div>
+
+					<% if (CurUser && CurUser.id==camp.author.id) {%>
+					<a class="btn btn-warning " href="/campground/<%=camp._id%>/edit">Edit</a>
+					<form style="display:inline;" id="Delete" action="/campground/<%=camp._id%>?_method=DELETE" method="post">
+						<button  class="btn btn-danger">Delete Post</button>
+					</form>
+					<%}%>
+				</div>
+			</div>
+				<div class="well" style="margin-top: 10px; padding-top: 0; padding-bottom: 0px;margin-bottom:6px;">
+					<%if(camp.Comment.length==0){%>
+						<div class="text-center">No Comment Yet</div>
+					<%}%>
+					<%   camp.Comment.forEach(function(obj){%>
+						<div class="row">
+							<div style="width: 20%;" class="pull-right">
+								<ul class="cleanfloat" style="float: right; margin-bottom: 0px">
+									<%for(var x=0;x<obj.Rating;x++){%>
+								  	<li class="pop" >&#9733;</li>
+								  	<%}%>
+								</ul>
+								<p style="float: right;min-width: 66%;text-align: right;"><%=moment(obj.createdDate).fromNow()%></p>
+								
+							</div>
+							<div style="width: 80%;">
+							<h3 style="margin-top: 0px;"><%=obj.author.username%></h3>
+							
+							<p style=" word-wrap: break-word;
+							word-break: break-all;
+ 							 overflow: auto;max-height: 150px;min-height: 40px;white-space: pre-line;"><%=obj.text%></p>
+							<% if (CurUser && CurUser.id==obj.author.id) {%>
+							<div style="margin-bottom: 5px;">
+							<a class="btn btn-warning btn-xs" href="/campground/<%=camp._id%>/comment/<%=obj._id%>/edit">Edit</a>
+							<form style="display:inline;"  action="/campground/<%=camp._id%>/comment/<%=obj._id%>?_method=DELETE" method="post">
+						    	<button  class="btn btn-danger btn-xs">Delete </button>
+							</form>
+							</div>
+							<%}%>
+
+							</div>
+							<%if(camp.Comment.indexOf(obj)!=camp.Comment.length-1){%>
+							<hr style="margin-top: 15px;border-top:1px dotted gray;">
+							<%}%>
+							
+						</div>	
+						
+					<%});%>
+					
+				</div>	
+				<div class="text-right" style="margin-bottom: 8px;">
+						<a class="btn btn-success" href="/campground/<%=camp._id%>/comment/new">Post new comment</a>
+				</div>
+			<!-- </div> -->
+		</div>		
+	</div>
+	
+</div>
+
+<% include ../partials/footer%>
+<script type="text/javascript">
+
+</script>
+

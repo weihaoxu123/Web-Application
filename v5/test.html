@@ -1,0 +1,31 @@
+<head><style type="text/css">
+.cleanfloat::after{display: block; clear: both; content:""; visibility: hidden; height: 0;}/*清浮动*/
+ul li{list-style:none; float:left; font-size:30px; margin:5px; color:orange; cursor:pointer;}/*五角星样式*/
+.hs,.cs{color:green;}
+</style></head>
+<ul class="cleanfloat">
+  	<li>&#9733;</li>
+	<li>&#9733;</li>
+	<li>&#9733;</li>
+	<li>&#9733;</li>
+	<li>&#9733;</li>
+</ul>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+  	$(function () {
+        $(".cleanfloat li").hover(function(){
+            $(this).addClass('hs');
+            $(this).prevAll().addClass('hs');
+        },function(){
+            $(this).removeClass('hs');
+            $(this).prevAll().removeClass('hs');
+        })
+
+        $(".cleanfloat li").click(function () {
+            $(this).addClass('cs');
+            $(this).prevAll().addClass('cs');
+            $(this).nextAll().removeClass('cs');
+            console.log($(this).index()+1);
+        })
+    })
+  </script>
