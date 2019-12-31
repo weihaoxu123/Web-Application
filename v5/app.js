@@ -17,7 +17,7 @@ var AuthRoute     = require("./routes/auth.js"),
     CommentRoute  = require("./routes/comment.js"),
     CampRoute     = require("./routes/campground.js");
 
-mongoose.connect("mongodb://localhost:27017/campground",{useNewUrlParser:true,useUnifiedTopology:true});
+mongoose.connect("mongodb://47.110.148.187:27017/campground",{useNewUrlParser:true,useUnifiedTopology:true});
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname+"/public"));
 app.set('view engine', 'ejs');
