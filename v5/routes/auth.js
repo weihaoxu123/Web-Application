@@ -32,8 +32,13 @@ router.post("/login",passport.authenticate("local",
 
 });
 router.get("/logout",function(req,res){
+	console.log(req.query);
 	req.logout();
-	req.flash("info","log out");
+	if(req.query.timeout){
+		req.flash("info","Too Long,Automatically Log Out");
+	}	else{
+		req.flash("info","log out");
+	}
 	res.redirect("/campground");
 });
 module.exports=router;

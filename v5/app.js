@@ -17,7 +17,7 @@ var AuthRoute     = require("./routes/auth.js"),
     CommentRoute  = require("./routes/comment.js"),
     CampRoute     = require("./routes/campground.js");
 
-mongoose.connect("mongodb://47.110.148.187:27017/campground",{useNewUrlParser:true,useUnifiedTopology:true});
+mongoose.connect("mongodb://localhost:27017/campground",{useNewUrlParser:true,useUnifiedTopology:true});
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname+"/public"));
 app.set('view engine', 'ejs');
@@ -35,6 +35,11 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(function(req,res,next){
+	if(req.user){
+		res.locals.isLogin=true;
+	}	else{
+		res.locals.isLogin=false;
+	}
 	res.locals.CurUser=req.user;
 	res.locals.error=req.flash("error");
 	res.locals.info=req.flash("info");
@@ -45,7 +50,7 @@ app.use(AuthRoute);
 app.use("/campground/:id/comment",CommentRoute);
 app.use("/campground",CampRoute);
 
-var server=app.listen(3000,function(){
+var server=app.listen(80,function(){
 
 })
 // console.log(server,"pop");
