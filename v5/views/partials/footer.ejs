@@ -22,7 +22,7 @@
 	function checkTime(){
 		if(<%=isLogin%>){
 			curTime=new Date().getTime();
-			if((curTime-prevTime)>(5*1000)){
+			if((curTime-prevTime)>(3*60*1000)){
 				window.location.replace("/logout?timeout=true");
 				prevTime=new Date().getTime();
 			}
