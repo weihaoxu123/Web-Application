@@ -2,24 +2,16 @@
 <style type="text/css">
 .cleanfloat{
 	margin-left: 11%;
+	padding-inline-start:0px;
 }
 .cleanfloat::after{display: block; clear: both; content:""; visibility: hidden; height: 0;}/*清浮动*/
-.pop {list-style:none; float:left; font-size:30px; margin:8px; color:#b0c4de; cursor:pointer;width: 10%;}
+.pop {list-style:none; float:left; font-size:30px; color:#b0c4de; cursor:pointer;width: 10%;}
 .hs,.cs{color:#AEDD81;}/*五角星样式*/
 @media screen and (max-width: 800px) {
-	.cleanfloat{
-		margin-left: 0px;
-	}
-    .pop{
-    	font-size: 22px;
-    	margin: 4px;
-	}}
-
-@media screen and (max-width: 500px) {
     .pop{
     	font-size: 18px;
-    	margin: 1px;
-	}}
+    }
+}
 </style>
 <div class="container">
 	<div class="row" >
@@ -34,11 +26,11 @@
                		<input class="form-control" type="hidden" value=0 name="comment[Rating]" id="ll">
                		<!-- <span for="name">Rating?</span> -->
                		<ul class="cleanfloat">
-					  	<li class="pop" >&#9733;</li>
+					  	<li class="pop" style="margin-left: 20%;">&#9733;</li>
 						<li class="pop" >&#9733;</li>
 						<li class="pop" >&#9733;</li>
 						<li class="pop" >&#9733;</li>
-						<li class="pop" >&#9733;</li>
+						<li class="pop" style="margin-right: 20%;">&#9733;</li>
 					</ul>
 					
                 </div> 
