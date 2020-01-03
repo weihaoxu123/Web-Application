@@ -26,7 +26,7 @@ app.use(require("express-session")({
 	resave:false,
 	saveUninitialized:false,
 	cookie:{
-		maxAge:1000*60*20
+		maxAge:1000*60*15
 	}
 }));
 app.use(bodyParser.urlencoded({extended:true}));
