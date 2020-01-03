@@ -24,7 +24,10 @@ app.set('view engine', 'ejs');
 app.use(require("express-session")({
 	secret:"Dream",
 	resave:false,
-	saveUninitialized:false
+	saveUninitialized:false,
+	cookie:{
+		maxAge:1000*60*20
+	}
 }));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
@@ -45,6 +48,11 @@ app.use(function(req,res,next){
 	res.locals.info=req.flash("info");
 	next();
 })
+app.use(function(req, res, next){
+    req.session._garbage = Date();
+    req.session.touch();
+    next();
+});
 app.use(methodOverride("_method"));
 app.use(AuthRoute);
 app.use("/campground/:id/comment",CommentRoute);

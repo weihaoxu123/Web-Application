@@ -11,25 +11,6 @@
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
-<script >
-	var curTime=new Date().getTime();
-	var prevTime=new Date().getTime();
-	$(function(){
-		$(document).mouseover(function(){
-			prevTime=new Date().getTime();
-		});
-	})
-	function checkTime(){
-		if(<%=isLogin%>){
-			curTime=new Date().getTime();
-			if((curTime-prevTime)>(3*60*1000)){
-				window.location.replace("/logout?timeout=true");
-				prevTime=new Date().getTime();
-			}
-		}
-	}
-	 window.setInterval(checkTime,5000);
-</script>
 
 </html>
 
