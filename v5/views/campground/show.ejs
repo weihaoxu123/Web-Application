@@ -58,6 +58,7 @@
 					<%}%>
 				</div>
 			</div>
+				<% locals.a=0;%>
 				<div class="well" style="margin-top: 10px; padding-top: 0; padding-bottom: 0px;margin-bottom:6px; padding-left: 0px;padding-right: 0px;">
 					
 					<%if(camp.Comment.length==0){%>
@@ -81,9 +82,35 @@
 							<p style=" word-wrap: break-word;
 							word-break: break-all;
  							 overflow: auto;max-height: 150px;min-height: 40px;white-space: pre-line;"><%=obj.text%></p>
-							<% if (CurUser && CurUser.id==obj.author.id) {%>
+ 							
+							<% if (CurUser && CurUser.id==obj.author.id) { locals.a=1;%>
 							<div style="margin-bottom: 5px;">
-							<a class="btn btn-warning btn-xs" href="/campground/<%=camp._id%>/comment/<%=obj._id%>/edit">Edit</a>
+							<a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= obj._id %>" aria-expanded="false" aria-controls="collapse<%= obj._id %>">
+    						Edit</a>
+						  	<div class="collapse" id="collapseEdit<%= obj._id %>">
+				    			<div class="well" style="border-left: 5px solid #00C851;">
+						      <!--If the user is logged in, show the new comment form-->
+							    <h4>Editing... <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
+							    <form id="add-comment-form" action="/campground/<%= camp._id %>/comment/<%=obj._id%>?_method=PUT" method="post">
+							        <div class="form-group">
+							          <textarea class="form-control" name="comment2[text]"  rows="5" cols="70"><%=obj.text%></textarea>
+							        </div>
+							        <div class="form-group">
+					               		<input class="form-control" type="hidden" value=0 name="comment2[Rating]" id="ll">
+					               		<ul class="cleanfloat">
+										  	<li class="pop" style="margin-left: 20%;">&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" style="margin-right: 20%;">&#9733;</li>
+										</ul>
+					                </div> 
+							        <div class="form-group">
+							          <button class="btn btn-success btn-sm">Submit <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+		        					</div>
+		      					</form>
+								</div>
+  							</div>
 							<form style="display:inline;"  action="/campground/<%=camp._id%>/comment/<%=obj._id%>?_method=DELETE" method="post">
 						    	<button  class="btn btn-danger btn-xs">Delete </button>
 							</form>
@@ -98,46 +125,47 @@
 						</div>	
 						
 					<%});%>
+					<%  if (locals.a==0) {%>
 					<div>
+						
 					    <a style="margin-top: 5px;" class="btn btn-success pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
-					      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new comment</a>
+					     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new comment</a>
   					</div>
-  					  <div class="collapse" id="collapseComment">
-    <div class="well" style="border-left: 5px solid #00C851;">
-        <% if(!CurUser) { %>
-      <!--If the user is not logged in, direct him to the login page-->
-      <h5>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
-        <% } %>
-        <% if(CurUser) { %>
-      <!--If the user is logged in, show the new comment form-->
-      <h4>Write your comment <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
-      <form id="add-comment-form" action="/campground/<%= camp._id %>/comment" method="post">
-        <div class="form-group">
-          <input class="form-control" type="text" disabled value="<%= CurUser.username %>">
-        </div>
-        <div class="form-group">
-          <textarea class="form-control" name="comment[text]" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70"></textarea>
-        </div>
-        <div class="form-group">
-               		<input class="form-control" type="hidden" value=0 name="comment[Rating]" id="ll">
-               		<!-- <span for="name">Rating?</span> -->
-               		<ul class="cleanfloat">
-					  	<li class="pop" style="margin-left: 20%;">&#9733;</li>
-						<li class="pop" >&#9733;</li>
-						<li class="pop" >&#9733;</li>
-						<li class="pop" >&#9733;</li>
-						<li class="pop" style="margin-right: 20%;">&#9733;</li>
-					</ul>
-					
-                </div> 
-        <div class="form-group">
-          <button class="btn btn-success btn-sm">Comment <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
-        </div>
-      </form>
-        <% } %>
-    </div>
-  </div>
-					
+  					<%}%>
+				  	<div class="collapse" id="collapseComment">
+					    <div class="well" style="border-left: 5px solid #00C851;">
+							<% if(!CurUser) { %>
+							<!--If the user is not logged in, direct him to the login page-->
+							<h5>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
+							<% } %>
+							<% if(CurUser) { %>
+						      <!--If the user is logged in, show the new comment form-->
+							    <h4>Write your comment <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
+							    <form id="add-comment-form" action="/campground/<%= camp._id %>/comment" method="post">
+							        <div class="form-group">
+							          <input class="form-control" type="text" disabled value="<%= CurUser.username %>">
+							        </div>
+							        <div class="form-group">
+							          <textarea class="form-control" name="comment[text]" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70"></textarea>
+							        </div>
+							        <div class="form-group">
+					               		<input class="form-control" type="hidden" value=0 name="comment[Rating]" id="ll">
+					               		<ul class="cleanfloat">
+										  	<li class="pop" style="margin-left: 20%;">&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" >&#9733;</li>
+											<li class="pop" style="margin-right: 20%;">&#9733;</li>
+										</ul>
+					                </div> 
+							        <div class="form-group">
+							          <button class="btn btn-success btn-sm">Comment <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+		        					</div>
+		      					</form>
+	    					<% } %>
+    					</div>
+  					</div>
+
 				</div>	
 				
 			<!-- </div> -->

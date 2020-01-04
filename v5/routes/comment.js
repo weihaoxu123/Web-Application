@@ -10,7 +10,8 @@ router.get("/new",middleware.isLoggedIn,middleware.AlreadyPost,function(req,res)
 	})
 	
 });
-router.post("/",middleware.isLoggedIn,function(req,res){
+router.post("/",middleware.isLoggedIn,middleware.AlreadyPost,function(req,res){
+
 	Campground.findById(req.params.id).populate("Comment").exec(function(err,back){
 		Comment.create(req.body.comment,function(err,commentBack){
 			commentBack.author.username=req.user.username;
@@ -38,8 +39,9 @@ router.get("/:comment_id/edit",middleware.Commentchecked,function(req,res){
 		}
 	})
 })
-router.put("/:comment_id",middleware.Commentchecked,function(req,res){	
-	Comment.findByIdAndUpdate(req.params.comment_id,req.body.comment,function(err,obj){
+router.put("/:comment_id",middleware.Commentchecked,function(req,res){
+	Comment.findByIdAndUpdate(req.params.comment_id,req.body.comment2,function(err,obj){
+		
 		if(err){
 			res.redirect("back");
 		}	else{
@@ -47,7 +49,7 @@ router.put("/:comment_id",middleware.Commentchecked,function(req,res){
 				if(err){
 					res.redirect("back");
 				}	else{
-					back.Total+=req.body.comment.Rating-obj.Rating;
+					back.Total+=req.body.comment2.Rating-obj.Rating;
 					back.save();
 				}
 			});
@@ -57,15 +59,21 @@ router.put("/:comment_id",middleware.Commentchecked,function(req,res){
 	})
 })
 router.delete("/:comment_id",middleware.Commentchecked,function(req,res){
-	Comment.findByIdAndRemove(req.params.comment_id,function(err){
+	Comment.findByIdAndRemove(req.params.comment_id,function(err,back){
 		if(err){
 			res.redirect("back");
 		}	else{
+			Campground.findById(req.params.id,function(err,obj){
+				if(err){
+					res.redirect("back");
+				}	else{
+					obj.Total-=back.Rating;
+					obj.save();
+				}
+			});
 			User.update({_id:req.user._id},{$pull:{ReviewedCamp:req.params.id}},function(err,raw){
-				console.log(raw);
 			});
 			Campground.update({_id:req.params.id},{$pull:{Comment:req.params.comment_id}},function(err,raw){
-				console.log(raw);
 			});
 			req.flash("info","successfully deleted");
 			res.redirect("/campground/"+req.params.id);
